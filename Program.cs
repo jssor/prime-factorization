@@ -1,6 +1,6 @@
 ﻿/*
- * author: jssor
- */
+* author: jssor
+*/
 
 using System;
 using System.Collections.Generic;
@@ -80,22 +80,25 @@ namespace PrimeFactorisation
                 if (remainder > 0)
                 {
                     long x1 = remainder / y;
-                    if (remainder % y > 0)
-                    {
-                        x1++;
-                    }
                     remainder -= x1 * y;
                     x += x1;
+                    if (remainder > 0)
+                    {
+                        remainder -= y;
+                        x++;
+                    }
                 }
                 else
                 {
                     long y1 = -remainder / x;
-                    if (-remainder % x > 0)
-                    {
-                        y1++;
-                    }
                     y -= y1;
                     remainder += x * y1;
+
+                    if (remainder < 0)
+                    {
+                        y--;
+                        remainder += x;
+                    }
                 }
             }
 
