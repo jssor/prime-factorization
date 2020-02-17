@@ -77,13 +77,16 @@ namespace PrimeFactorisation
             if(y > 1)
             {
                 long remainder = number - x * y;
+                long mode = remainder % y;
+                x += remainder / y;
+                remainder = mode;
 
                 while (remainder != 0)
                 {
                     y--;
 
                     remainder += x;
-                    long mode = remainder % y;
+                    mode = remainder % y;
                     x += remainder / y;
                     remainder = mode;
                 }
