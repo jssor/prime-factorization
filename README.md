@@ -14,29 +14,19 @@ Prime Factorization (2d space hit algorithm)
         double sqrt = Math.Sqrt(number);
         long x = (long)sqrt;
         long y = x;
-        long remainder = number - x * y;
 
-        while (remainder != 0)
+        if(y > 1)
         {
-            if (remainder > 0)
+            long remainder = number - x * y;
+
+            while (remainder != 0)
             {
-                long x1 = remainder / y;
-                if (remainder % y > 0)
-                {
-                    x1++;
-                }
-                remainder -= x1 * y;
-                x += x1;
-            }
-            else
-            {
-                long y1 = -remainder / x;
-                if (-remainder % x > 0)
-                {
-                    y1++;
-                }
-                y -= y1;
-                remainder += x * y1;
+                y--;
+
+                remainder += x;
+                long mode = remainder % y;
+                x += remainder / y;
+                remainder = mode;
             }
         }
 

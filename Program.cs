@@ -73,32 +73,19 @@ namespace PrimeFactorisation
             double sqrt = Math.Sqrt(number);
             long x = (long)sqrt;
             long y = x;
-            long remainder = number - x * y;
 
-            while (remainder != 0)
+            if(y > 1)
             {
-                if (remainder > 0)
-                {
-                    long x1 = remainder / y;
-                    remainder -= x1 * y;
-                    x += x1;
-                    if (remainder > 0)
-                    {
-                        remainder -= y;
-                        x++;
-                    }
-                }
-                else
-                {
-                    long y1 = -remainder / x;
-                    y -= y1;
-                    remainder += x * y1;
+                long remainder = number - x * y;
 
-                    if (remainder < 0)
-                    {
-                        y--;
-                        remainder += x;
-                    }
+                while (remainder != 0)
+                {
+                    y--;
+
+                    remainder += x;
+                    long mode = remainder % y;
+                    x += remainder / y;
+                    remainder = mode;
                 }
             }
 
