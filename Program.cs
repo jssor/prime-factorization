@@ -17,6 +17,20 @@ namespace PrimeFactorisation
         /// 2305843009213693951 (2^61-1)
         /// 4611686018427387903 (2^62-1)
         /// 9223372036854775807 (2^63-1)
+        /// 134109847012397401
+        /// 123523465345764537
+        /// 617617326728822689
+        /// 134103495123459132
+        /// 131249812354125335
+        /// 134009870193402141
+        /// 098697845487658768
+        /// 987587649869797045
+        /// 901823410293481324
+        /// 998234023490870907
+        /// 986986713040981024
+        /// 907812341043204713
+        /// 919238471293412342
+        /// 
         /// </summary>
         static void Main(string[] args)
         {
@@ -70,36 +84,49 @@ namespace PrimeFactorisation
         {
             List<long> list = new List<long>();
 
-            double sqrt = Math.Sqrt(number);
-            long x = (long)sqrt;
-            long y = x;
-
-            if(y > 1)
-            {
-                long remainder = number - x * y;
-                long mode = remainder % y;
-                x += remainder / y;
-                remainder = mode;
-
-                while (remainder != 0)
-                {
-                    y--;
-
-                    remainder += x;
-                    mode = remainder % y;
-                    x += remainder / y;
-                    remainder = mode;
-                }
-            }
-
-            if (y == 1)
+            if (number < 4)
             {
                 list.Add(number);
             }
+            else if ((number & 1) == 0)
+            {
+                list.Add(2);
+                list.AddRange(Factorize(number / 2));
+            }
             else
             {
-                list.AddRange(Factorize(x));
-                list.AddRange(Factorize(y));
+                long x = (long)Math.Sqrt(number);
+                long y = x;
+                long remainder = number - x * y;
+
+                if (remainder < 0)
+                {
+                    y--;
+                    x--;
+                    remainder = 2 * x;
+                }
+                
+                x += remainder / y;
+                remainder = remainder % y;
+
+                while (remainder > 0 && y > 3)
+                {
+                    y--;
+                    remainder += x;
+
+                    x += remainder / y;
+                    remainder = remainder % y;
+                }
+
+                if (remainder > 0)
+                {
+                    list.Add(number);
+                }
+                else
+                {
+                    list.AddRange(Factorize(y));
+                    list.AddRange(Factorize(number / y));
+                }
             }
 
             return list;
